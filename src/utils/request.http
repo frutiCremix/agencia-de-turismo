@@ -1,0 +1,141 @@
+@devUrl=http://localhost:3001
+###GET
+//usuarios insertar id
+GET {{devUrl}}/user/12
+###clientes insertar id
+GET {{devUrl}}/client/4
+
+###ruta privada de prueba para el login
+GET {{devUrl}}/private
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjQzLCJub21icmUiOiJudWV2byIsImFwZWxsaWRvIjoibnVldm8iLCJkaXJlY2Npb24iOiJudWV2byIsImRuaSI6MTIzNDU2LCJmZWNoYV9uYWMiOiIxOTkzLTA4LTA3VDAzOjAwOjAwLjAwMFoiLCJuYWNpb25hbGlkYWQiOiJhcmdlbnRpbmEiLCJjZWx1bGFyIjoxMjM0NTY3OCwiZW1haWwiOiJudWV2b0Bob3RtYWlsLmNvbSIsInJvbCI6ImNsaWVudGUiLCJ1c2VybmFtZSI6InNlYmkzIiwicGFzc3dvcmQiOiIkMmEkMTAkdzRGeTNwZTNhcHg5SjFqNnRoWkFndUlSc2FjRTZrRzJnS3IvdXVEZXRoQzA3M1BuL2dPV3kifSwiaWF0IjoxNzA4MzU3OTM2LCJleHAiOjE3MDgzNjE1MzZ9.gzXk1SL7GAmgv1EVzghYruhQztZR5LhTn1_ZDA_1StA
+
+
+//rutas post
+//usernames unicos no permite duplicados
+###crear usuario con rol cliente
+POST {{devUrl}}/user
+Content-Type: application/json
+
+{   
+    "name":"sebastian",
+    "lastname":"oliveto",
+    "adress":"prueba",
+    "dni":"123456",
+    "date":"1993-08-07",
+    "nationality":"argentina",
+    "phone":"12345678",
+    "email":"sebas@hotmail.com",
+    "rol":"cliente",
+    "baja":false,
+    "username":"sebas",
+    "password":"sebas"
+}
+###crear usuario con rol empleado
+POST {{devUrl}}/user
+Content-Type: application/json
+
+{   
+    "name":"empleado1",
+    "lastname":"empleado1",
+    "adress":"prueba",
+    "dni":"123456",
+    "date":"1993-08-07",
+    "nationality":"argentina",
+    "phone":"12345678",
+    "email":"empleado1@hotmail.com",
+    "rol":"empleado",
+    "baja":false,
+    "username":"empleado1",
+    "password":"empleado1",
+    "cargo":"vendedor",
+    "sueldo":1000
+}
+
+### creacion de servicio por parte de empleado
+//el sistema verifica rol del usuario si es empleado
+POST {{devUrl}}/service
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjEyLCJub21icmUiOiJlbXBsZWFkbzEiLCJhcGVsbGlkbyI6ImVtcGxlYWRvMSIsImRpcmVjY2lvbiI6InBydWViYSIsImRuaSI6MTIzNDU2LCJmZWNoYV9uYWMiOiIxOTkzLTA4LTA3VDAzOjAwOjAwLjAwMFoiLCJuYWNpb25hbGlkYWQiOiJhcmdlbnRpbmEiLCJjZWx1bGFyIjoxMjM0NTY3OCwiZW1haWwiOiJlbXBsZWFkbzFAaG90bWFpbC5jb20iLCJyb2wiOiJlbXBsZWFkbyIsImJhamEiOjAsInVzZXJuYW1lIjoiZW1wbGVhZG8xIiwicGFzc3dvcmQiOiIkMmEkMTAkY0w2ZTZjb2xFYzNWWEpFVE1oMXBLZUJuOTZacG9Rb29XOEhBLnJaZTRib0o3UmliNEdiekMifSwiaWF0IjoxNzA4NDk3MDQ3LCJleHAiOjE3MDg1MDA2NDd9.vz2QzSr26FhQ_x0htGgpsFl5HFcXKDux0N2kwVcTBL0
+
+{
+    "id_usuario": 12,
+    "nombreServico":"entrada a eventos",
+    "descripcion":"cosquin rock",
+    "destino":"cordoba",
+    "fecha":"2024-2-15",
+    "costo":"30000",
+    "codigo_servicio":7
+}
+//contraseña encriptada en ambos casos, acordarsela XD
+### login cliente
+POST {{devUrl}}/login
+Content-Type: application/json
+
+{
+    "username":"sebas",
+    "password":"sebas"
+}
+### login empleado
+POST {{devUrl}}/login
+Content-Type: application/json
+
+{
+    "username":"empleado1",
+    "password":"empleado1"
+}
+
+###ventas
+//para utilizar primero loguear un usuario cliente(proximamente solo clientes) y utilizar su toquen
+//los servicios son los id identificadores de la tabla servicio
+POST {{devUrl}}/sales
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjEzLCJub21icmUiOiJudWV2byIsImFwZWxsaWRvIjoibnVldm8iLCJkaXJlY2Npb24iOiJudWV2byIsImRuaSI6MTIzNDU2LCJmZWNoYV9uYWMiOiIxOTkzLTA4LTA3VDAzOjAwOjAwLjAwMFoiLCJuYWNpb25hbGlkYWQiOiJhcmdlbnRpbmEiLCJjZWx1bGFyIjoxMjM0NTY3OCwiZW1haWwiOiJudWV2b0Bob3RtYWlsLmNvbSIsInJvbCI6ImNsaWVudGUiLCJiYWphIjowLCJ1c2VybmFtZSI6InNlYmFzIiwicGFzc3dvcmQiOiIkMmEkMTAkV1FJV1V5eTlEWnpuYmkwNnpXNkcvT1B5RWx0SFo2aDhOY2o2alA2dXo4RjFPdy5NdWRIYTYifSwiaWF0IjoxNzA4NTAxNTM2LCJleHAiOjE3MDg1MDUxMzZ9.luVR77MOQiP7rVbkPUOZz4g-qsYL_vgil8BhOg8G0rA
+
+{
+    "servicios":[12,13,14],
+    "medio_pago":"mercado-pago"
+}
+
+### rutas PATCH
+//modificamos cliente se puede enviar menos datos
+PATCH {{devUrl}}/client/6
+Content-Type: application/json
+
+{   
+    "name":"nuevo",
+    "lastname":"nuevo",
+    "adress":"nuevo",
+    "dni":"123456",
+    "date":"1993-08-07",
+    "nationality":"argentina",
+    "phone":"12345678",
+    "email":"nuevo@hotmail.com"
+}
+### modificamos empleado se puede enviar menos datos
+PATCH  {{devUrl}}/employee/4
+Content-Type: application/json
+
+{   
+    "name":"sebas",
+    "lastname":"",
+    "adress":"ezeiza",
+    "dni":"123456",
+    "date":"1993-08-07",
+    "nationality":"argentina",
+    "phone":"12345678",
+    "email":"nuevo@hotmail.com",
+    "cargo":"gerente",
+    "sueldo":"15000"
+}
+
+### rutas delete se elimina por id cliente/empleado y automaticamente se elimina el usuario asociado
+//actualizacion se cambio por baja logica el usuario se agrego baja=false/true
+//ya no se utiliza la baja fisica en la bd.Se conservan los datos
+//user
+DELETE {{devUrl}}/user/4
+### 
+DELETE {{devUrl}}/client/3
+
+###
+//empleado
+DELETE {{devUrl}}/employee/2

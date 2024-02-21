@@ -1,0 +1,25 @@
+# Dependencias instaladas con npm
+/node_modules
+
+# Archivos de registro y errores
+npm-debug.log
+logs
+*.log
+*.pid
+*.seed
+*.db
+
+# Entorno de desarrollo
+.env
+
+# Archivos generados durante el proceso de construcción
+/build
+/dist
+
+# Dependencias específicas del sistema (por ejemplo, macOS, Windows)
+.DS_Store
+Thumbs.db
+
+# Dependencias específicas de la IDE (por ejemplo, WebStorm, VSCode)
+.idea
+.vscode
