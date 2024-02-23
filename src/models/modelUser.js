@@ -103,18 +103,53 @@ const searchUserById = async (id) => {
   }
 };
 //damos la baja logica
-const setUserAsInactiveById = (id, callback) => {
-  connection.query("UPDATE usuario SET baja = TRUE WHERE id_usuario = ?", [id], callback);
+const setUserAsInactiveById = async (id) => {
+  try {
+     const { data, error } = await supabase
+      .from('usuario')
+      .update({ user_state: false })
+      .eq('id_usuario', id)
+      .select('*');
+    if (error) {
+      throw error;
+    }
+    
+    return data;
+    
+  } catch (error) {
+    throw error;
+  }
 };
 
-const modifyUserById = (
+
+const modifyUserById = async (
   id,
-  { nombre, apellido, direccion, dni, fecha_nac, nacionalidad, celular, email },
-  callback
+  { name, lastname, address, dni, birthdate, country, phone, email }
 ) => {
-  connection.query(
-    "UPDATE usuario SET nombre = ?, apellido = ?, direccion = ?, dni = ?, fecha_nac = ?, nacionalidad = ?, celular = ?, email = ? WHERE id_usuario = ?",
-    [nombre, apellido, direccion, dni, fecha_nac, nacionalidad, celular, email, id],callback);
+  try {
+    const { data, error } = await supabase
+      .from('usuario')
+      .update({
+        name: name,
+        lastname: lastname,
+        address: address,
+        dni: dni,
+        birthdate: birthdate,
+        country: country,
+        phone: phone,
+        email: email
+      })
+      .eq('id_usuario', id)
+      .select('*');
+
+    if (error) {
+      throw error;
+    }
+    
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export { userCreate, searchUserByUserName,searchUserById, setUserAsInactiveById, modifyUserById };

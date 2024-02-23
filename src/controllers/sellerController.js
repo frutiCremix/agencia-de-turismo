@@ -6,141 +6,112 @@ import {
 } from "../models/modelSeller.js";
 import { setUserAsInactiveById, modifyUserById } from "../models/modelUser.js";
 
-const searchSellerByIdHandler = async(req, res) => {
-  const {id} = req.params;
-  try{
-   const results=await searchSellerById(id);
-   if (!results) {
-    return res.status(404).json({ message: "Vendedor no encontrado" });
-  }
-  res.json({ message: "Vendedor encontrado con exito", results });
-  }catch(error){
+const searchSellerByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const results = await searchSellerById(id);
+    if (!results) {
+      return res.status(404).json({ message: "Vendedor no encontrado" });
+    }
+    res.json({ message: "Vendedor encontrado con exito", results });
+  } catch (error) {
     res.status(500).json({ message: "Error en la consulta", error });
   }
-  
 };
-const deleteSellerByIdHandler = (req, res) => {
+const deleteSellerByIdHandler = async (req, res) => {
   const { id } = req.params;
 
-  idUserBySellerId(id, (error, results, fields) => {
-    if (error) {
-      return res.status(500).json({
-        message:
-          "Error en la petición de busqueda del usuario en la tabla empleado",
-      });
-    }
-    if (!results.length > 0) {
-      return res.status(404).json({ message: "Empleado no encontrado" });
+  try {
+    const results = await idUserBySellerId(id);
+
+    if (!results || results.error || results.length == 0) {
+      return res.status(404).json({ message: "Vendedor no encontrado" });
     }
 
     const userId = results[0].usuario_id_usuario;
 
-    //salio todo bien ahora eliminas el empleado y el usuario
+    const deletionResult = await setUserAsInactiveById(userId);
 
-    //antes de eliminar esto necesito eliminar todos los servicios a su cargo
-    //solucionado al cambiarlo por baja logica
-    setUserAsInactiveById(userId, (error, results, fields) => {
-      if (error) {
-        return res.status(500).json({
-          message: "Error en la petición de eliminacion del usuario",
-        });
-      }
-      if (!results.affectedRows) {
-        return res.status(404).json({ message: "Usuario no encontrado" });
-      }
-      return res.json({
-        message: "Usuario eliminado con éxito",
-        userId: userId,
-        sellerId: id,
-      });
+    if (!deletionResult || deletionResult.error) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+    return res.json({
+      message: "Vendedor dado de baja con exito",
+      userId: userId,
+      VendedorId: id,
     });
-  });
+  } catch (error) {
+    return res.status(500).json({ message: "Error en la petición" });
+  }
 };
 
-const modifySellerByIdHandler = (req, res) => {
+const modifySellerByIdHandler = async (req, res) => {
   const { id } = req.params;
   const newSeller = req.body;
+  try {
+    const results = await searchSellerById(id);
 
-  searchSellerById(id, (error, results, fields) => {
-    if (error) {
-      return res.status(500).json({ message: "Error al buscar el empleado" });
+    if (!results || results.error || results.length == 0) {
+      return res.status(404).json({ message: "Vendedor no encontrado" });
     }
-
-    if (results.length === 0) {
-      return res.status(404).json({ message: "Empleado no encontrado" });
-    }
-
     const seller = results[0];
-    const idUser = seller.id_usuario;
-    //valores del usuario asociado
-    if (newSeller.name) {
-      seller.nombre = newSeller.name;
+    const idUser = seller.usuario_id_usuario;
+    
+    if (typeof newSeller.name !== "undefined") {
+      seller.name = newSeller.name;
     }
-    if (newSeller.lastname) {
-      seller.apellido = newSeller.lastname;
+    if (typeof newSeller.lastname !== "undefined") {
+      seller.lastname = newSeller.lastname;
     }
-    if (newSeller.adress) {
-      seller.direccion = newSeller.adress;
+    if (typeof newSeller.address !== "undefined") {
+      seller.address = newSeller.address;
     }
-    if (newSeller.dni) {
+    if (typeof newSeller.dni !== "undefined") {
       seller.dni = newSeller.dni;
     }
-    if (newSeller.date) {
-      seller.fecha_nac = newSeller.date;
+    if (typeof newSeller.birthdate !== "undefined") {
+      seller.birthdate = newSeller.birthdate;
     }
-    if (newSeller.nationality) {
-      seller.nacionalidad = newSeller.nationality;
+    if (typeof newSeller.country !== "undefined") {
+      seller.country = newSeller.country;
     }
-    if (newSeller.phone) {
-      seller.celular = newSeller.phone;
+    if (typeof newSeller.phone !== "undefined") {
+      seller.phone = newSeller.phone;
     }
-    if (newSeller.email) {
+    if (typeof newSeller.email !== "undefined") {
       seller.email = newSeller.email;
     }
 
-    //enviar cliente al modelo del usuario
-    modifyUserById(idUser, seller, (error, results, fields) => {
-      if (error) {
-        return res
-          .status(500)
-          .json({
-            message: "Error en la consulta de modificación de empleado",
-          });
-      }
+    const resultModify = await modifyUserById(idUser, seller);
 
-      if (!results.affectedRows) {
-        return res
-          .status(404)
-          .json({ message: "Empleado no encontrado para actualizar" });
-      }
+    if (!resultModify || resultModify.error || resultModify.length == 0) {
+      return res
+        .status(404)
+        .json({ message: "Usuario Vendedor no encontrado" });
+    }
+    //verificamos si tenemos sueldo y cargo actualizados
 
-      //verificamos si tenemos sueldo y cargo actualizados
+    if (typeof newSeller.job !== "undefined") {
+      seller.job = newSeller.job;
+    }
+    if (typeof newSeller.salary !== "undefined") {
+      seller.salary = newSeller.salary;
+    }
 
-      if (newSeller.cargo) {
-        seller.cargo = newSeller.cargo;
-      }
-      if (newSeller.sueldo) {
-        seller.sueldo = newSeller.sueldo;
-      }
+    const resultModifySeller = await modifySellerById(id, seller);
 
-      modifySellerById(id, seller, (error, results, fields) => {
-        if (error) {
-          return res
-            .status(500)
-            .json({
-              message: "Error en la consulta de modificación de empleado",
-            });
-        }
+    if (
+      !resultModifySeller ||
+      resultModifySeller.error ||
+      resultModifySeller.length == 0
+    ) {
+      return res.status(404).json({ message: "Vendedor no encontrado" });
+    }
+    return res.json({ message: "Vendedor modificado con éxito" ,idSeller:id,idUser:idUser});
 
-        if (!results.affectedRows) {
-          return res
-            .status(404)
-            .json({ message: "Empleado no encontrado para actualizar" });
-        }
-        res.json({ message: "Empleado actualizado con exito" });
-      });
-    });
-  });
+  } catch (error) {
+    return res.status(500).json({ message: "Error en la petición",error:error });
+  }
 };
 
 export {

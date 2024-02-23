@@ -45,17 +45,6 @@ export const searchUserHandler = async (username) => {
   } catch (error) {
     throw error;
   }
-
-  /*searchUserByUserName(username, (err, results) => {
-    if (err) {
-      return callback(err, null);
-    }
-    if (results.length > 0) {
-      callback(null, results[0]);
-    } else {
-      callback(null, null);
-    }
-  });*/
 };
 export const searchUserByIdHandler = async (req, res) => {
   const { id } = req.params;
@@ -72,16 +61,13 @@ export const searchUserByIdHandler = async (req, res) => {
     res.status(500).json({ message: "Error en la consulta", error });
   }
 };
-export const deleteUserByIdHandler = (req, res) => {
+export const deleteUserByIdHandler = async(req, res) => {
   const { id } = req.params;
-
-  setUserAsInactiveById(id, (error, results, fields) => {
-    if (error) {
-      return res.status(500).json({ message: "Error en la petición" });
-    }
-    if (results && results.affectedRows === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-    return res.json({ message: "Usuario dado de baja con éxito", id: id });
-  });
+try{
+  const results=await setUserAsInactiveById(id);
+  if(!results || results.error || results.length ==0){
+    return res.status(404).json({message:"Usuario no encontrado"});
+  }
+  return res.json({message:"Usuario dado de baja con exito",userId:id});
+}catch(error){ return res.status(500).json({message:"Error en la solicitud"});}
 };

@@ -23,15 +23,15 @@ Content-Type: application/json
     "name":"sebastian",
     "lastname":"oliveto",
     "address":"prueba",
-    "dni":"125216224",
+    "dni":"125246224",
     "birthdate":"1993-08-07",
     "country":"argentina",
     "phone":"12345678",
     "email":"sebas@hotmail.com",
     "role":"cliente",
     "user_state":true,
-    "username":"prueba17",
-    "password":"prueba17"
+    "username":"prueba18",
+    "password":"prueba18"
 }
 ###crear usuario con rol empleado
 POST {{devUrl}}/user
@@ -101,44 +101,42 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3Vzd
 
 ### rutas PATCH
 //modificamos cliente se puede enviar menos datos
-PATCH {{devUrl}}/client/6
+PATCH {{devUrl}}/client/4
 Content-Type: application/json
 
-{   
-    "name":"nuevo",
-    "lastname":"nuevo",
-    "adress":"nuevo",
-    "dni":"123456",
-    "birthdate":"1993-08-07",
-    "country":"argentina",
-    "phone":"12345678",
-    "email":"nuevo@hotmail.com"
+{  
+      "name": "sebastian",
+      "email": "sebas@hotmail.com",        
+      "phone": "1122334455",
+      "address": "ezeiza",  
+      "country": "argentina",
+      "lastname": "oliveto"       
 }
 ### modificamos empleado se puede enviar menos datos
-PATCH  {{devUrl}}/seller/4
+PATCH  {{devUrl}}/seller/2
 Content-Type: application/json
 
 {   
     "name":"sebas",
-    "lastname":"",
-    "adress":"ezeiza",
-    "dni":"123456",
+    "lastname":"oliveto",
+    "address":"ezeiza",
+    "dni":"183456",
     "birthdate":"1993-08-07",
     "country":"argentina",
     "phone":"12345678",
     "email":"nuevo@hotmail.com",
-    "cargo":"gerente",
-    "sueldo":"15000"
+    "job":"gerente",
+    "salary":"15000"
 }
 
 ### rutas delete se elimina por id cliente/empleado y automaticamente se elimina el usuario asociado
 //actualizacion se cambio por baja logica el usuario se agrego baja=false/true
 //ya no se utiliza la baja fisica en la bd.Se conservan los datos
 //user
-DELETE {{devUrl}}/user/4
+DELETE {{devUrl}}/user/42
 ### 
-DELETE {{devUrl}}/client/3
+DELETE {{devUrl}}/client/1
 
 ###
-//empleado
-DELETE {{devUrl}}/seller/2
+//vendedor
+DELETE {{devUrl}}/seller/1
