@@ -1,9 +1,12 @@
 @devUrl=http://localhost:3001
 ###GET
 //usuarios insertar id
-GET {{devUrl}}/user/12
+GET {{devUrl}}/user/1
 ###clientes insertar id
-GET {{devUrl}}/client/4
+GET {{devUrl}}/client/1
+
+###vendedor 
+GET {{devUrl}}/seller/1
 
 ###ruta privada de prueba para el login
 GET {{devUrl}}/private
@@ -19,16 +22,16 @@ Content-Type: application/json
 {   
     "name":"sebastian",
     "lastname":"oliveto",
-    "adress":"prueba",
-    "dni":"123456",
-    "date":"1993-08-07",
-    "nationality":"argentina",
+    "address":"prueba",
+    "dni":"125216224",
+    "birthdate":"1993-08-07",
+    "country":"argentina",
     "phone":"12345678",
     "email":"sebas@hotmail.com",
-    "rol":"cliente",
-    "baja":false,
-    "username":"sebas",
-    "password":"sebas"
+    "role":"cliente",
+    "user_state":true,
+    "username":"prueba17",
+    "password":"prueba17"
 }
 ###crear usuario con rol empleado
 POST {{devUrl}}/user
@@ -37,18 +40,18 @@ Content-Type: application/json
 {   
     "name":"empleado1",
     "lastname":"empleado1",
-    "adress":"prueba",
-    "dni":"123456",
-    "date":"1993-08-07",
-    "nationality":"argentina",
-    "phone":"12345678",
+    "address":"prueba",
+    "dni":"123457888",
+    "birthdate":"1993-08-07",
+    "country":"argentina",
+    "phone":"12345679",
     "email":"empleado1@hotmail.com",
-    "rol":"empleado",
-    "baja":false,
-    "username":"empleado1",
-    "password":"empleado1",
-    "cargo":"vendedor",
-    "sueldo":1000
+    "role":"vendedor",
+    "user_state":true,
+    "username":"empleado6",
+    "password":"empleado6",
+    "job":"vendedor",
+    "salary":1000
 }
 
 ### creacion de servicio por parte de empleado
@@ -106,13 +109,13 @@ Content-Type: application/json
     "lastname":"nuevo",
     "adress":"nuevo",
     "dni":"123456",
-    "date":"1993-08-07",
-    "nationality":"argentina",
+    "birthdate":"1993-08-07",
+    "country":"argentina",
     "phone":"12345678",
     "email":"nuevo@hotmail.com"
 }
 ### modificamos empleado se puede enviar menos datos
-PATCH  {{devUrl}}/employee/4
+PATCH  {{devUrl}}/seller/4
 Content-Type: application/json
 
 {   
@@ -120,8 +123,8 @@ Content-Type: application/json
     "lastname":"",
     "adress":"ezeiza",
     "dni":"123456",
-    "date":"1993-08-07",
-    "nationality":"argentina",
+    "birthdate":"1993-08-07",
+    "country":"argentina",
     "phone":"12345678",
     "email":"nuevo@hotmail.com",
     "cargo":"gerente",
@@ -138,4 +141,4 @@ DELETE {{devUrl}}/client/3
 
 ###
 //empleado
-DELETE {{devUrl}}/employee/2
+DELETE {{devUrl}}/seller/2

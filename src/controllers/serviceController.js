@@ -1,9 +1,9 @@
-import { createService,searchEmployeeByUserId,getPriceService } from "../models/modelService.js";
+import { createService,searchSellerByUserId,getPriceService } from "../models/modelService.js";
 //necesitamos saber los servicios que pertenecen al empleado
 const createServiceHandler = (req, res) => {
   const { id_usuario } = req.body;
   //con la foranea de empleado recupero el id del empleado
-  searchEmployeeByUserId(id_usuario, (error, results, fields) => {
+  searchSellerByUserId(id_usuario, (error, results, fields) => {
     if (error) {
       res
         .status(500)
@@ -15,9 +15,9 @@ const createServiceHandler = (req, res) => {
       res.status(404).json({ message: "Empleado no encontrado" });
     }
     //una vez recuperado el id del empleado enviarlo para crear el servicio
-    const idEmployee=results[0].id_empleado;
+    const idSeller=results[0].id_empleado;
     
-    createService(idEmployee,req.body,(error,results,fields)=>{
+    createService(idSeller,req.body,(error,results,fields)=>{
         if (error) {
             return res.status(500).json({
               message: "Error al crear el servicio",error:error
@@ -31,7 +31,7 @@ const getPricePackage = (req, res, next) => {
   const servicios = req.body.servicios;
   let totalPrice = 0;
   const promises = [];
-  const employees=[];
+  const sellers=[];
 //cremos el array de promesas y las resolvemos todas juntas para devolver una sola respuesta
   servicios.forEach((idService) => {
     const promise = new Promise((resolve, reject) => {
@@ -43,7 +43,7 @@ const getPricePackage = (req, res, next) => {
         } else {
           
           totalPrice += results[0].costo_servicio;
-          employees.push(results[0].empleado_id_empleado);
+          sellers.push(results[0].empleado_id_empleado);
           resolve();
         }
       });
@@ -54,7 +54,7 @@ const getPricePackage = (req, res, next) => {
   Promise.all(promises)
     .then(() => {
       req.price = totalPrice;
-      req.employees=employees;
+      req.sellers=sellers;
       next();
     })
     .catch((error) => {

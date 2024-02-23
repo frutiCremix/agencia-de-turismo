@@ -1,83 +1,107 @@
-import connection from "../utils/conexionDB.js";
-const userCreate = (
+//import connection from "../utils/conexionDB.js";
+import {supabase} from '../utils/conectSupabase.js';
+const userCreate = async (
   {
     name,
     lastname,
-    adress,
+    address,
     dni,
-    date,
-    nationality,
+    birthdate,
+    country,
     phone,
     email,
-    rol,
-    baja=false,
+    role,
+    user_state = true,
     username,
   },
-  hash,
-  callback
+  hash
 ) => {
   // Validar que todos los campos requeridos estén presentes
-  if (
-    !name ||
-    !lastname ||
-    !adress ||
-    !dni ||
-    !date ||
-    !nationality ||
-    !phone ||
-    !email ||
-    !rol ||
-    !username ||
-    !hash
-  ) {
-    const error = new Error("Todos los campos son obligatorios.");
-    return callback(error);
+  if (!name || !lastname || !address || !dni || !birthdate || !country || !phone || !email || !role || !username || !hash) {
+    throw new Error("Todos los campos son obligatorios.");
   }
 
   // Validar el formato del correo electrónico
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    const error = new Error(
-      "El correo electrónico no tiene un formato válido."
-    );
-    return callback(error);
-  }
-  // Validar el formato de la fecha (yyyy-mm-dd)
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (!dateRegex.test(date)) {
-    const error = new Error("La fecha debe tener el formato yyyy-mm-dd.");
-    return callback(error);
+    throw new Error("El correo electrónico no tiene un formato válido.");
   }
 
-  connection.query(
-    "INSERT INTO usuario (nombre,apellido,direccion,dni,fecha_nac,nacionalidad,celular,email,rol,baja,username,password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [
-      name,
-      lastname,
-      adress,
-      dni,
-      date,
-      nationality,
-      phone,
-      email,
-      rol,
-      baja,
-      username,
-      hash,
-    ],
-    callback
-  );
+  // Validar el formato de la fecha (yyyy-mm-dd)
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(birthdate)) {
+    throw new Error("La fecha debe tener el formato yyyy-mm-dd.");
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("usuario")
+      .insert({
+        name,
+        lastname,
+        address,
+        dni,
+        birthdate,
+        country,
+        phone,
+        email,
+        role,
+        user_state,
+        username,
+        password: hash,
+      })
+      .select('*');// Utiliza .single() para asegurarte de que solo se inserte un registro y obtener ese registro
+
+    if (error) {
+      throw new Error(`Error al insertar el usuario: ${error.message}`);
+    }
+
+    return data; // Devuelve los datos insertados
+  } catch (error) {
+    throw error;
+  }
 };
-const searchUserByUserName = (username, callback) => {
-  connection.query(
+const searchUserByUserName = async (username) => {
+  try{
+    const {data,error} = await supabase
+    .from('usuario')
+    .select('*')
+    .eq('username',username)
+  if(error){
+    throw error;
+  }
+  if (data && data.length > 0 && data[0].id_usuario) {
+    return data[0].id_usuario;
+  } else {
+    throw new Error("No se pudo obtener el ID del usuario insertado.");
+  } 
+  }catch(error){
+    throw error;
+  }
+  
+  
+  /*connection.query(
     "SELECT * FROM usuario WHERE username = ?",
     [username],
     callback
-  );
+  );*/
 };
-const searchUserById=(id,callback)=>{
-  connection.query("SELECT * FROM usuario WHERE id_usuario = ?", [id], callback);
-}
+const searchUserById = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from('usuario')
+      .select('*')
+      .eq('id_usuario', id);
+
+    if (error) {
+      throw error;
+    }
+
+    return data ? data[0] : null; 
+  } catch (error) {
+    throw error;
+  }
+};
 //damos la baja logica
 const setUserAsInactiveById = (id, callback) => {
   connection.query("UPDATE usuario SET baja = TRUE WHERE id_usuario = ?", [id], callback);

@@ -39,7 +39,7 @@ export function authenticate(req, res, next) {
   
 });
 }
-export function isEmployee(req, res, next) {
+export function isSeller(req, res, next) {
   const rol = req.user.rol;
   
   console.log(rol);
