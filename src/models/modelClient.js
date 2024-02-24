@@ -40,12 +40,23 @@ const searchClientById = async (id) => {
   }
 };
 
-const searchClientByUserId = (id, callback) => {
-  connection.query(
-    "SELECT id_cliente FROM cliente WHERE usuario_id_usuario = ?",
-    [id],
-    callback
-  );
+const searchClientByUserId = async (id) => {
+  try {
+      // Realizar la consulta para obtener el ID del cliente
+      const { data, error } = await supabase
+          .from('cliente')
+          .select('id_cliente')
+          .eq('usuario_id_usuario', id);
+           // Suponiendo que solo esperas un solo resultado
+
+      if (error) {
+          throw new Error('Error al buscar el cliente en Supabase');
+      }
+      
+      return data;
+  } catch (error) {
+      throw error;
+  }
 };
 //necesito el id del user antes de eliminar el cliente y luego eliminar al usuario
 const idUserByClientId = async (id) => {

@@ -30,7 +30,7 @@ router.post('/sales',verify,getPricePackage,createSaleHandler);
 
 router.post('/login',authenticate,(req,res)=>{
     const token=sign(req.user,"1h");
-    console.log({token: token,user:req.user})
+    //console.log({token: token,user:req.user})
     res.json({token: token,user:req.user});
 });
 //ruta de prueba para los jwt

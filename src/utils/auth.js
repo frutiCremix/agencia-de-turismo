@@ -1,52 +1,49 @@
-import  {searchUserHandler}  from "../controllers/userController.js";
+import { searchUserHandler } from "../controllers/userController.js";
 import { compare } from "./handleCrypt.js";
 
-export function authenticate(req, res, next) {
+export async function authenticate(req, res, next) {
   const { username, password } = req.body;
   if (!username || !password) {
-    return res
-      .status(401)
-      .json({
-        message: "credenciales no otorgadas",
-        username: username,
-        passoword: password,
-      });
+    return res.status(401).json({
+      message: "credenciales no otorgadas",
+      username: username,
+      passoword: password,
+    });
   }
+  try {
+    const resulstSearchUser = await searchUserHandler(username);
 
-//verificar en la bd
- // Verificar en la base de datos utilizando el controlador
- searchUserHandler(username, async (err, user) => {
-  if (err) {
-      return res.status(500).json({ message: "Error al verificar las credenciales" });
-  }
-  if (!user) {
-      return res.status(401).json({ message: "Credenciales incorrectas" });
-  }
-  // Si las credenciales son correctas, agregamos el usuario a la solicitud y llamamos a next()
-  //si esta dado de baja no te podes loguear
-  if(user.baja){
-    return res.status(403).json({ message: "Usuario esta dado de baja.Crea otro usuario" });
-  }
-  const passwordMatch = await compare(password,user.password);
+    if (!resulstSearchUser) {
+      return res.status(404).json({ message: "usuario no encontrado" });
+    }
+    if (resulstSearchUser.user_state == false) {
+      return res
+        .status(403)
+        .json({ message: "Usuario esta dado de baja.Crea otro usuario" });
+    }
+    //usuario existe
+    const passwordMatch = await compare(password, resulstSearchUser.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "password incorrectas" });
+    } else {
+      req.user = resulstSearchUser;
+      next();
     }
-    else{req.user = user;
-      //estos son datos de la tabla usuario ni de cliente ni de empleado
-      //realizar la logica para dependiendo el rol devolver la info correspondiente
-      next();}
-  
-  
-});
-}
+  } catch (error) {
+    return res.status(500).json({
+      message: "error en la consulta de busqueda por username",
+      error: error,
+    });
+  }
+} //verificar rol y user_status
 export function isSeller(req, res, next) {
-  const rol = req.user.rol;
-  
-  console.log(rol);
-  
-  if (rol !== "empleado") {
+ 
+  if (req.user.role !== "vendedor") {
     return res.status(403).json({ message: "No tienes permisos necesarios" });
   }
-  
+  if(req.user.user_state==false){
+    return res.status(403).json({ message: "Usuario dado de baja para crear servicio.crea otro usuario" });
+  }
+
   next(); // Solo llama a next() si el usuario tiene el rol adecuado
 }

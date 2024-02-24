@@ -71,7 +71,10 @@ const searchUserByUserName = async (username) => {
     throw error;
   }
   if (data && data.length > 0 && data[0].id_usuario) {
-    return data[0].id_usuario;
+    
+    
+    return data[0];
+
   } else {
     throw new Error("No se pudo obtener el ID del usuario insertado.");
   } 

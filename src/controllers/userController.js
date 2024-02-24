@@ -25,6 +25,8 @@ export const createUser = async (req, res) => {
       res.json({ message: "Usuario creado con éxito" });
     }
   } catch (error) {
+    
+    //contenplar la duplicacion del dni
     if (error.code === "ER_DUP_ENTRY") {
       return res
         .status(500)
@@ -35,10 +37,14 @@ export const createUser = async (req, res) => {
   }
 };
 export const searchUserHandler = async (username) => {
+  
   try {
+    //tenemos el id del usuario
     const results = await searchUserByUserName(username);
-    if (results.length > 0) {
-      return results[0];
+    //existe el id
+    if (results|| !results.error || results.length>0) {
+      
+      return results;
     } else {
       return null;
     }

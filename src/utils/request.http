@@ -22,34 +22,34 @@ Content-Type: application/json
 {   
     "name":"sebastian",
     "lastname":"oliveto",
-    "address":"prueba",
-    "dni":"125246224",
+    "address":"ezeiza",
+    "dni":"12345678",
     "birthdate":"1993-08-07",
     "country":"argentina",
     "phone":"12345678",
     "email":"sebas@hotmail.com",
     "role":"cliente",
     "user_state":true,
-    "username":"prueba18",
-    "password":"prueba18"
+    "username":"sebas",
+    "password":"sebas"
 }
 ###crear usuario con rol empleado
 POST {{devUrl}}/user
 Content-Type: application/json
 
 {   
-    "name":"empleado1",
-    "lastname":"empleado1",
-    "address":"prueba",
-    "dni":"123457888",
+    "name":"cristobal",
+    "lastname":"colon",
+    "address":"europa",
+    "dni":"12348",
     "birthdate":"1993-08-07",
     "country":"argentina",
     "phone":"12345679",
     "email":"empleado1@hotmail.com",
     "role":"vendedor",
     "user_state":true,
-    "username":"empleado6",
-    "password":"empleado6",
+    "username":"cristobal",
+    "password":"cristobal",
     "job":"vendedor",
     "salary":1000
 }
@@ -58,16 +58,15 @@ Content-Type: application/json
 //el sistema verifica rol del usuario si es empleado
 POST {{devUrl}}/service
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjEyLCJub21icmUiOiJlbXBsZWFkbzEiLCJhcGVsbGlkbyI6ImVtcGxlYWRvMSIsImRpcmVjY2lvbiI6InBydWViYSIsImRuaSI6MTIzNDU2LCJmZWNoYV9uYWMiOiIxOTkzLTA4LTA3VDAzOjAwOjAwLjAwMFoiLCJuYWNpb25hbGlkYWQiOiJhcmdlbnRpbmEiLCJjZWx1bGFyIjoxMjM0NTY3OCwiZW1haWwiOiJlbXBsZWFkbzFAaG90bWFpbC5jb20iLCJyb2wiOiJlbXBsZWFkbyIsImJhamEiOjAsInVzZXJuYW1lIjoiZW1wbGVhZG8xIiwicGFzc3dvcmQiOiIkMmEkMTAkY0w2ZTZjb2xFYzNWWEpFVE1oMXBLZUJuOTZacG9Rb29XOEhBLnJaZTRib0o3UmliNEdiekMifSwiaWF0IjoxNzA4NDk3MDQ3LCJleHAiOjE3MDg1MDA2NDd9.vz2QzSr26FhQ_x0htGgpsFl5HFcXKDux0N2kwVcTBL0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjQ2LCJjcmVhdGVkX2F0IjoiMjAyNC0wMi0yNFQwMjowMzo0Ny42MTAzMTIrMDA6MDAiLCJuYW1lIjoiY3Jpc3RvYmFsIiwibGFzdG5hbWUiOiJjb2xvbiIsImFkZHJlc3MiOiJldXJvcGEiLCJkbmkiOjEyMzQ4LCJiaXJ0aGRhdGUiOiIxOTkzLTA4LTA3IiwiY291bnRyeSI6ImFyZ2VudGluYSIsInBob25lIjoiMTIzNDU2NzkiLCJyb2xlIjoidmVuZGVkb3IiLCJ1c2VyX3N0YXRlIjp0cnVlLCJ1c2VybmFtZSI6ImNyaXN0b2JhbCIsInBhc3N3b3JkIjoiJDJhJDEwJGlvLzNZVlhyOE9ERm92YXAuOENUQ09xNjhpR1BLNEM4SXFnNEZrQm5xaW5HRXhRZzBVaVlHIiwiZW1haWwiOiJlbXBsZWFkbzFAaG90bWFpbC5jb20ifSwiaWF0IjoxNzA4NzQwMjM0LCJleHAiOjE3MDg3NDM4MzR9.hSWZa1fozzsKha2FOGdq7E9dGErmP7mCb9Q4MJVa77o
 
 {
-    "id_usuario": 12,
-    "nombreServico":"entrada a eventos",
-    "descripcion":"cosquin rock",
-    "destino":"cordoba",
-    "fecha":"2024-2-15",
-    "costo":"30000",
-    "codigo_servicio":7
+    "name":"entrada a eventos",
+    "description":"cosquin rock",
+    "service_destination":"cordoba",
+    "service_date":"2024-2-15",
+    "cost":"30000",
+    "service_code":7
 }
 //contraseña encriptada en ambos casos, acordarsela XD
 ### login cliente
@@ -75,16 +74,16 @@ POST {{devUrl}}/login
 Content-Type: application/json
 
 {
-    "username":"sebas",
-    "password":"sebas"
+    "username":"prueba17",
+    "password":"prueba17"
 }
 ### login empleado
 POST {{devUrl}}/login
 Content-Type: application/json
 
 {
-    "username":"empleado1",
-    "password":"empleado1"
+    "username":"cristobal",
+    "password":"cristobal"
 }
 
 ###ventas
@@ -92,11 +91,11 @@ Content-Type: application/json
 //los servicios son los id identificadores de la tabla servicio
 POST {{devUrl}}/sales
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjEzLCJub21icmUiOiJudWV2byIsImFwZWxsaWRvIjoibnVldm8iLCJkaXJlY2Npb24iOiJudWV2byIsImRuaSI6MTIzNDU2LCJmZWNoYV9uYWMiOiIxOTkzLTA4LTA3VDAzOjAwOjAwLjAwMFoiLCJuYWNpb25hbGlkYWQiOiJhcmdlbnRpbmEiLCJjZWx1bGFyIjoxMjM0NTY3OCwiZW1haWwiOiJudWV2b0Bob3RtYWlsLmNvbSIsInJvbCI6ImNsaWVudGUiLCJiYWphIjowLCJ1c2VybmFtZSI6InNlYmFzIiwicGFzc3dvcmQiOiIkMmEkMTAkV1FJV1V5eTlEWnpuYmkwNnpXNkcvT1B5RWx0SFo2aDhOY2o2alA2dXo4RjFPdy5NdWRIYTYifSwiaWF0IjoxNzA4NTAxNTM2LCJleHAiOjE3MDg1MDUxMzZ9.luVR77MOQiP7rVbkPUOZz4g-qsYL_vgil8BhOg8G0rA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjMwLCJjcmVhdGVkX2F0IjoiMjAyNC0wMi0yM1QwMjoxMjoyMC4xMzEyMjcrMDA6MDAiLCJuYW1lIjoic2ViYXN0aWFuIiwibGFzdG5hbWUiOiJvbGl2ZXRvIiwiYWRkcmVzcyI6ImV6ZWl6YSIsImRuaSI6MTI1MjE2MjI0LCJiaXJ0aGRhdGUiOiIxOTkzLTA4LTA3IiwiY291bnRyeSI6ImFyZ2VudGluYSIsInBob25lIjoiMTEyMjMzNDQ1NSIsInJvbGUiOiJjbGllbnRlIiwidXNlcl9zdGF0ZSI6dHJ1ZSwidXNlcm5hbWUiOiJwcnVlYmExNyIsInBhc3N3b3JkIjoiJDJhJDEwJDAydWtvRHBlYnMxQk92WGpDNkQ5ZXVxWmJHYy8vTWk3LlVwTW9OUXZES3oxLzFmdTl4ZmFLIiwiZW1haWwiOiJzZWJhc0Bob3RtYWlsLmNvbSJ9LCJpYXQiOjE3MDg3MzczMTAsImV4cCI6MTcwODc0MDkxMH0.I8gU07Rvjj2FYp5uz2R1t2F2UEOgOzGXSF66aid7lyQ
 
 {
-    "servicios":[12,13,14],
-    "medio_pago":"mercado-pago"
+    "id_servicios":[1,2],
+    "payment_method":"mercado-pago"
 }
 
 ### rutas PATCH

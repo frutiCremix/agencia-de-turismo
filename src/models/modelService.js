@@ -1,13 +1,50 @@
-import connection from "../utils/conexionDB.js";
+//import connection from "../utils/conexionDB.js";
+import { supabase } from "../utils/conectSupabase.js";
+const createService = async (vendedor_id_vendedor, { name, description, service_destination, service_date, cost, service_code }) => {
 
-const createService=(id,{nombreServico,descripcion,destino,fecha,costo,codigo_servicio},callback)=>{
-//calcular fecha
-    connection.query("INSERT INTO servicio (nombre,descripcion_breve,destino_servicio,fecha_servicio,costo_servicio,codigo_servicio,empleado_id_empleado)values(?,?,?,?,?,?,?)",[nombreServico,descripcion,destino,fecha,costo,codigo_servicio,id],callback);
-}
-const searchSellerByUserId=(id,callback)=>{
-    connection.query("SELECT id_empleado FROM empleado where usuario_id_usuario = ?",[id],callback);
-}      
-const getPriceService=(id,callback)=>{
-    connection.query("SELECT empleado_id_empleado,costo_servicio FROM servicio where id = ?",[id],callback);
-}
+    const { data, error } = await supabase
+        .from('servicio')
+        .insert([
+            {
+                name: name,
+                description: description,
+                service_destination: service_destination,
+                service_date: service_date,
+                cost: cost,
+                service_code: service_code,
+                vendedor_id_vendedor: vendedor_id_vendedor
+            }
+        ])
+        .select('*');
+
+    if (error) {
+        console.error('Error al insertar el servicio:', error.message);
+        return null; 
+    }
+
+    return data;
+};
+const searchSellerByUserId = async (id) => {
+    // Realizar la consulta para obtener el ID del vendedor
+    const { data, error } = await supabase
+        .from('vendedor')
+        .select('id_vendedor')
+        .eq('usuario_id_usuario', id); // Suponiendo que solo esperas un resultado único
+
+    if (error) {
+        throw new error;
+    }
+    return data;
+};
+const getPriceService = async (id) => {
+    const { data, error } = await supabase
+        .from('servicio')
+        .select('vendedor_id_vendedor,cost')
+        .eq('id_servicio', id);
+
+    if (error) {
+        throw new Error('Error al obtener el precio del servicio desde Supabase');
+    }
+    return data;
+};
 export {createService,searchSellerByUserId,getPriceService}
