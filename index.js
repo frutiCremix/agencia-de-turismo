@@ -9,7 +9,12 @@ const app=express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors())
+const allowedDomain = 'https://tudominio.com';
+
+
+app.use(cors({
+  origin: 'https://example-agencia-de-viajes.netlify.app/'
+}))
 
 app.use(router);
 // manejo de errores
@@ -20,5 +25,5 @@ app.use((err, req, res, next) => {
   
 
 app.listen(PORT,()=>{
-    console.log(`servidor a la escucha en http://localhost:${PORT}`);
+    console.log(`servidor a la escucha en https://agencia-de-turismo.onrender.com`);
 });

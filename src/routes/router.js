@@ -10,6 +10,10 @@ import {sign, verify} from '../utils/jwt.js';
 import {authenticate,isSeller} from'../utils/auth.js';
 const router = Router();
 
+router.get('/', (req, res) => {
+    res.send('¡Bienvenido a la API de la Agencia de Turismo!');
+});
+
 router.get('/user/:id',searchUserByIdHandler);
 router.post('/user',createUser);
 router.delete('/user/:id',deleteUserByIdHandler);
