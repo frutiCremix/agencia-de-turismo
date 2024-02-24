@@ -6,7 +6,7 @@ import {
 //necesitamos saber los servicios que pertenecen al empleado
 
 const createServiceHandler = async (req, res) => {
-  const { id_usuario }  = req.user;
+  const id_usuario   = req.user;
   try {
     // Buscar el vendedor por ID de usuario
     const sellerId = await searchSellerByUserId(id_usuario);
@@ -30,6 +30,7 @@ const createServiceHandler = async (req, res) => {
 };
 const getPricePackage = async (req, res, next) => {
   //[1,5,3]<-- ids de servicios
+ 
   const servicios = req.body.id_servicios;
   let totalPrice = 0;
   const sellers = [];
@@ -60,6 +61,7 @@ const getPricePackage = async (req, res, next) => {
       await Promise.all(promises);
       req.price={totalPrice};
       req.sellers={sellers};
+      
       next();
   } catch (error) {
       res.status(500).json({ message: "Error interno del servidor",error:error });

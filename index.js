@@ -1,20 +1,18 @@
 import express, { json } from 'express';
 import router  from './src/routes/router.js';
 import cors from 'cors'
-
+import cookieParser from 'cookie-parser';
 const PORT= process.env.PORT||3001;
 const app=express();
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-const allowedDomain = 'https://tudominio.com';
-
+app.use(cookieParser());
+//['https://example-agencia-de-viajes.netlify.app/',
 
 app.use(cors({
-  origin: 'https://example-agencia-de-viajes.netlify.app/'
-}))
+  origin:['https://example-agencia-de-viajes.netlify.app','http://localhost:5173','http://localhost:3001'],credentials:true}));
 
 app.use(router);
 // manejo de errores

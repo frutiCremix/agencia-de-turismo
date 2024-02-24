@@ -3,7 +3,9 @@ import { searchClientByUserId } from "../models/modelClient.js";
 import { createPackage } from "../models/modelPackage.js";
 
 const createSaleHandler = async (req, res) => {
-  const { id_usuario } = req.user;
+  
+  const  id_usuario  = req.user;
+  
   const { payment_method } = req.body;
   const { id_servicios } = req.body;
   const { sellers } = req.sellers;

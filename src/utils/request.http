@@ -1,7 +1,7 @@
 @devUrl=http://localhost:3001
 ###GET
 //usuarios insertar id
-GET {{devUrl}}/user/1
+GET {{devUrl}}/user/47
 ###clientes insertar id
 GET {{devUrl}}/client/1
 
@@ -10,7 +10,7 @@ GET {{devUrl}}/seller/1
 
 ###ruta privada de prueba para el login
 GET {{devUrl}}/private
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjQzLCJub21icmUiOiJudWV2byIsImFwZWxsaWRvIjoibnVldm8iLCJkaXJlY2Npb24iOiJudWV2byIsImRuaSI6MTIzNDU2LCJmZWNoYV9uYWMiOiIxOTkzLTA4LTA3VDAzOjAwOjAwLjAwMFoiLCJuYWNpb25hbGlkYWQiOiJhcmdlbnRpbmEiLCJjZWx1bGFyIjoxMjM0NTY3OCwiZW1haWwiOiJudWV2b0Bob3RtYWlsLmNvbSIsInJvbCI6ImNsaWVudGUiLCJ1c2VybmFtZSI6InNlYmkzIiwicGFzc3dvcmQiOiIkMmEkMTAkdzRGeTNwZTNhcHg5SjFqNnRoWkFndUlSc2FjRTZrRzJnS3IvdXVEZXRoQzA3M1BuL2dPV3kifSwiaWF0IjoxNzA4MzU3OTM2LCJleHAiOjE3MDgzNjE1MzZ9.gzXk1SL7GAmgv1EVzghYruhQztZR5LhTn1_ZDA_1StA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA4NzYyMjc5LCJleHAiOjE3MDg3NjU4Nzl9.IOfAXYQ7Qg5m95BiUcVJw9lU6jDXr_AJwTMGdoXFAOs
 
 
 //rutas post
@@ -58,7 +58,7 @@ Content-Type: application/json
 //el sistema verifica rol del usuario si es empleado
 POST {{devUrl}}/service
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjQ2LCJjcmVhdGVkX2F0IjoiMjAyNC0wMi0yNFQwMjowMzo0Ny42MTAzMTIrMDA6MDAiLCJuYW1lIjoiY3Jpc3RvYmFsIiwibGFzdG5hbWUiOiJjb2xvbiIsImFkZHJlc3MiOiJldXJvcGEiLCJkbmkiOjEyMzQ4LCJiaXJ0aGRhdGUiOiIxOTkzLTA4LTA3IiwiY291bnRyeSI6ImFyZ2VudGluYSIsInBob25lIjoiMTIzNDU2NzkiLCJyb2xlIjoidmVuZGVkb3IiLCJ1c2VyX3N0YXRlIjp0cnVlLCJ1c2VybmFtZSI6ImNyaXN0b2JhbCIsInBhc3N3b3JkIjoiJDJhJDEwJGlvLzNZVlhyOE9ERm92YXAuOENUQ09xNjhpR1BLNEM4SXFnNEZrQm5xaW5HRXhRZzBVaVlHIiwiZW1haWwiOiJlbXBsZWFkbzFAaG90bWFpbC5jb20ifSwiaWF0IjoxNzA4NzQwMjM0LCJleHAiOjE3MDg3NDM4MzR9.hSWZa1fozzsKha2FOGdq7E9dGErmP7mCb9Q4MJVa77o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA4NzYyNzA2LCJleHAiOjE3MDg3NjYzMDZ9.1kCocFk997pgbztXpG2SQrrHuftrZeImoIhA-_tvA1M
 
 {
     "name":"entrada a eventos",
@@ -74,8 +74,8 @@ POST {{devUrl}}/login
 Content-Type: application/json
 
 {
-    "username":"prueba17",
-    "password":"prueba17"
+    "username":"sebas",
+    "password":"sebas"
 }
 ### login empleado
 POST {{devUrl}}/login
@@ -91,10 +91,10 @@ Content-Type: application/json
 //los servicios son los id identificadores de la tabla servicio
 POST {{devUrl}}/sales
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkX3VzdWFyaW8iOjMwLCJjcmVhdGVkX2F0IjoiMjAyNC0wMi0yM1QwMjoxMjoyMC4xMzEyMjcrMDA6MDAiLCJuYW1lIjoic2ViYXN0aWFuIiwibGFzdG5hbWUiOiJvbGl2ZXRvIiwiYWRkcmVzcyI6ImV6ZWl6YSIsImRuaSI6MTI1MjE2MjI0LCJiaXJ0aGRhdGUiOiIxOTkzLTA4LTA3IiwiY291bnRyeSI6ImFyZ2VudGluYSIsInBob25lIjoiMTEyMjMzNDQ1NSIsInJvbGUiOiJjbGllbnRlIiwidXNlcl9zdGF0ZSI6dHJ1ZSwidXNlcm5hbWUiOiJwcnVlYmExNyIsInBhc3N3b3JkIjoiJDJhJDEwJDAydWtvRHBlYnMxQk92WGpDNkQ5ZXVxWmJHYy8vTWk3LlVwTW9OUXZES3oxLzFmdTl4ZmFLIiwiZW1haWwiOiJzZWJhc0Bob3RtYWlsLmNvbSJ9LCJpYXQiOjE3MDg3MzczMTAsImV4cCI6MTcwODc0MDkxMH0.I8gU07Rvjj2FYp5uz2R1t2F2UEOgOzGXSF66aid7lyQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA4NzY0MTMyLCJleHAiOjE3MDg3Njc3MzJ9.TZtT9Hg69rn8kktIwV8yAZ_tCuMcX3-OM8xQg534VV0
 
 {
-    "id_servicios":[1,2],
+    "id_servicios":[4],
     "payment_method":"mercado-pago"
 }
 

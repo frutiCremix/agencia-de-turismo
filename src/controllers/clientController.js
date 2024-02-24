@@ -53,7 +53,7 @@ try{
     const cliente = results[0];
     
     const idUser = cliente.usuario_id_usuario;
-    console.log(idUser);
+    
     if (typeof nuevoCliente.name !== 'undefined') {
       cliente.name = nuevoCliente.name;
     }

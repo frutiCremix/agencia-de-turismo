@@ -1,6 +1,6 @@
 import { searchUserHandler } from "../controllers/userController.js";
 import { compare } from "./handleCrypt.js";
-
+import { searchUserById } from "../models/modelUser.js";
 export async function authenticate(req, res, next) {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -22,6 +22,7 @@ export async function authenticate(req, res, next) {
         .json({ message: "Usuario esta dado de baja.Crea otro usuario" });
     }
     //usuario existe
+    
     const passwordMatch = await compare(password, resulstSearchUser.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "password incorrectas" });
@@ -36,14 +37,26 @@ export async function authenticate(req, res, next) {
     });
   }
 } //verificar rol y user_status
-export function isSeller(req, res, next) {
- 
-  if (req.user.role !== "vendedor") {
-    return res.status(403).json({ message: "No tienes permisos necesarios" });
-  }
-  if(req.user.user_state==false){
-    return res.status(403).json({ message: "Usuario dado de baja para crear servicio.crea otro usuario" });
-  }
+export async function isSeller(req, res, next) {
+  //buscar en la bd el usuario
 
-  next(); // Solo llama a next() si el usuario tiene el rol adecuado
+  try {
+    const user = await searchUserById(req.user);
+   
+    if (user.role !== "vendedor") {
+      return res.status(403).json({ message: "No tienes permisos necesarios" });
+    }
+    if (user.user_state == false) {
+      return res
+        .status(403)
+        .json({
+          message: "Usuario dado de baja para crear servicio.crea otro usuario",
+        });
+    }
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: "usuario no existe" });
+  }
+  
+  // Solo llama a next() si el usuario tiene el rol adecuado
 }
