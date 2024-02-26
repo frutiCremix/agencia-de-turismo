@@ -47,4 +47,15 @@ const getPriceService = async (id) => {
     }
     return data;
 };
-export {createService,searchSellerByUserId,getPriceService}
+const getAllService = async()=>{
+    const { data, error } = await supabase
+    .from('servicio')
+    .select('*')
+    .limit(10);
+    if (error) {
+        throw new Error('Error al obtener los servicios desde Supabase');
+    }
+    
+    return data;
+}
+export {createService,searchSellerByUserId,getPriceService,getAllService}

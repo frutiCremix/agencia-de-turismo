@@ -2,6 +2,7 @@ import {
   createService,
   searchSellerByUserId,
   getPriceService,
+  getAllService
 } from "../models/modelService.js";
 //necesitamos saber los servicios que pertenecen al empleado
 
@@ -68,5 +69,15 @@ const getPricePackage = async (req, res, next) => {
   }
   
 };
-
-export { createServiceHandler, getPricePackage };
+const getAllServiceHandler=async (req,res)=>{
+  try{
+  const results=await getAllService();
+  if(!results || results.error || results.length==0){
+    res.status(404).json({message:'no se encontraron servicios'})
+  }
+  res.json({message:'servicios',results:results})
+  }catch(error){
+    res.status(500).json({message:'error en la solicitud getAllService',error:error});
+  }
+}
+export { createServiceHandler, getPricePackage,getAllServiceHandler };
