@@ -76,8 +76,9 @@ POST /service
 ```
 ### rutas PATCH modificaciones
 //modificamos cliente se puede enviar menos datos
-#### PATCH /client/id <--- id del cliente
+#### PATCH /client
 - Content-Type: application/json
+- authorization: Bearer token
 ```
 {   
     "name":"nuevo",
@@ -91,8 +92,9 @@ POST /service
 }
 ```
 ### modificamos empleado se puede enviar menos datos
-PATCH  http://localhost:{puerto}/employee/id <-- id del empleado
+PATCH  /seller
 - Content-Type: application/json
+- Authorization: Bearer token
 ```
 {   
     "name":"sebas",
@@ -109,12 +111,14 @@ PATCH  http://localhost:{puerto}/employee/id <-- id del empleado
 ```
 ### rutas delete
 - se elimina por id cliente/empleado y automaticamente se elimina el usuario asociado
-- actualizacion se cambio por baja logica el usuario se agrego baja=false/true
+- actualizacion se cambio por baja logica el usuario se agrego user_state=false/true 
 - ya no se utiliza la baja fisica en la bd.Se conservan los datos
 
 user
 #### DELETE http://localhost:{puerto}/user/id
 cliente 
-#### DELETE http://localhost:{puerto}/client/id
+#### DELETE /client
+Authorization: Bearer token
 empleado
-#### DELETE http://localhost:{puerto}/employee/id
+#### DELETE /seller
+Authorization: Bearer token
