@@ -8,29 +8,29 @@
 ## rutas
 rutas para crear usuarios
 usuario cliente  
-#### http://localhost:{puerto}/user
+#### POST /user
 - Content-Type: application/json
 ```
 {   
     "name":"nombre",
     "lastname":"apellido",
-    "adress":"direccion",
+    "address":"direccion",
     "dni":"123456",
-    "date":"1993-08-07",
-    "nationality":"argentina",
+    "birthdate":"1993-08-07",
+    "country":"argentina",
     "phone":"12345678",
     "email":"email@hotmail.com",
-    "rol":"cliente",(2 roles cliente o empleado)
-    "baja":false,
+    "role":"cliente",(2 roles cliente o vendedor)
+    "user_state":true,
     "username":"username",//(username unicos no se repiten)
     "password":"1234", //(contraseña encriptada acuerdatela bien XD)
-    "cargo":"vendedor", //---> (solo empleado)
-    "sueldo":1000 //---> (solo empleado)
+    "job":"vendedor", //---> (solo empleado)
+    "salary":1000 //---> (solo empleado)
 }
 ```
 ## siguiente paso loguear el usuario
 ### login cliente
-#### POST http://localhost:{puerto}/login
+#### POST /login
 - Content-Type: application/json
 ```
 {
@@ -41,19 +41,18 @@ usuario cliente
 ejemplo de respuesta
 respuesta ---> token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
-## creacion de servicio solo para usuarios con rol empleado
-POST http://localhost:{puerto}/service
+## creacion de servicio solo para usuarios con rol vendedor
+POST /service
 - Content-Type: application/json
 - Authorization: Bearer token
 ```
 {
-    "id_usuario": id,
-    "nombreServico":"entrada a eventos",
-    "descripcion":"cosquin rock",
-    "destino":"cordoba",
-    "fecha":"2024-2-15",
-    "costo":"30000",
-    "codigo_servicio":7 /*( 
+    "name":"entrada a eventos",
+    "description":"cosquin rock",
+    "service_destination":"cordoba",
+    "service_date":"2024-2-15",
+    "cost":"30000",
+    "service_code":7 /*( 
                           cod 1: Hotel por noche/s
                           cod2: Alquiler de auto 
                           cod3: Pasajes de colectivo
@@ -66,18 +65,18 @@ POST http://localhost:{puerto}/service
 ```
 ## creacion de venta (un usuario dispara el evento de compra)
 
-#### POST http://localhost:{puerto}/sales
+#### POST /sales
 - Content-Type: application/json
 - Authorization: Bearer token
 ```
 {
-    "servicios":[12,13,14],     ---> los servicios son los id de la tabla servicio
-    "medio_pago":"mercado-pago"
+    "id_servicios":[12,13,14],  ---> los servicios son los id de la tabla servicio
+    "payment_method":"mercado-pago"
 }
 ```
 ### rutas PATCH modificaciones
 //modificamos cliente se puede enviar menos datos
-#### PATCH http://localhost:{puerto}/client/id <--- id del cliente
+#### PATCH /client/id <--- id del cliente
 - Content-Type: application/json
 ```
 {   
