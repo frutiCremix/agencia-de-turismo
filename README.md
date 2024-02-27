@@ -115,9 +115,10 @@ PATCH  /seller
 - ya no se utiliza la baja fisica en la bd.Se conservan los datos
 
 
-cliente 
-#### DELETE /client
+ 
+#### cliente DELETE /client
 Authorization: Bearer token
-empleado
-#### DELETE /seller
+
+
+#### Vendedor DELETE /seller
 Authorization: Bearer token
