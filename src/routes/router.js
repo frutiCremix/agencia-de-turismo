@@ -31,13 +31,13 @@ router.get("/user/:id", searchUserByIdHandler);
 router.post("/user", createUser);
 router.delete("/user/:id", deleteUserByIdHandler);
 
-router.get("/client/:id", searchClientByIdHandler);
-router.delete("/client/:id", deleteClientByIdHandler);
-router.patch("/client/:id", modifyClientByIdHandler);
+router.get("/client",verify, searchClientByIdHandler);
+router.delete("/client",verify, deleteClientByIdHandler);
+router.patch("/client",verify, modifyClientByIdHandler);
 
-router.get("/seller/:id", searchSellerByIdHandler);
-router.delete("/seller/:id", deleteSellerByIdHandler);
-router.patch("/seller/:id", modifySellerByIdHandler);
+router.get("/seller",verify, searchSellerByIdHandler);
+router.delete("/seller",verify, deleteSellerByIdHandler);
+router.patch("/seller",verify, modifySellerByIdHandler);
 
 router.post("/service", verify, isSeller, createServiceHandler);
 
@@ -47,7 +47,7 @@ router.post("/sales", verify, getPricePackage, createSaleHandler);
 router.post("/login", authenticate, (req, res) => {
   const id_usuario = req.user.id_usuario; 
   const token = sign(id_usuario, "1h");
-  res.json({ token: token, id_usuario: id_usuario });
+  res.json({ token: token});
 });
 //ruta de prueba para los jwt
 router.get("/private", verify, (req, res) => {

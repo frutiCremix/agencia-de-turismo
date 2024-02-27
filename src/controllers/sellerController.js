@@ -3,27 +3,39 @@ import {
   idUserBySellerId,
   deleteSellerById,
   modifySellerById,
+  idSellerByUserId
 } from "../models/modelSeller.js";
 import { setUserAsInactiveById, modifyUserById } from "../models/modelUser.js";
 
 const searchSellerByIdHandler = async (req, res) => {
-  const { id } = req.params;
+  const  id  = req.user;
  
   try {
-    const results = await searchSellerById(id);
-    if (!results) {
+    const idSeller=await idSellerByUserId(id);
+    console.log(idSeller)
+    if (!idSeller||idSeller.error||idSeller.length==0) {
+      return res.status(404).json({ message: "Vendedor no existe" });
+    }
+    const results = await searchSellerById(idSeller[0].id_vendedor);
+    if (!results||results.error||results.length==0) {
       return res.status(404).json({ message: "Vendedor no encontrado" });
     }
     res.json({ message: "Vendedor encontrado con exito", results });
   } catch (error) {
-    res.status(500).json({ message: "Error en la consulta", error });
+    res.status(500).json({ message: "Error en la consulta", error:error.message });
   }
 };
 const deleteSellerByIdHandler = async (req, res) => {
-  const { id } = req.params;
+  const  id  = req.user;
 
   try {
-    const results = await idUserBySellerId(id);
+    const idSeller=await idSellerByUserId(id);
+    
+    if (!idSeller||idSeller.error||idSeller.length==0) {
+      return res.status(404).json({ message: "Vendedor no existe" });
+    }
+
+    const results = await idUserBySellerId(idSeller[0].id_vendedor);
 
     if (!results || results.error || results.length == 0) {
       return res.status(404).json({ message: "Vendedor no encontrado" });
@@ -38,8 +50,8 @@ const deleteSellerByIdHandler = async (req, res) => {
     }
     return res.json({
       message: "Vendedor dado de baja con exito",
-      userId: userId,
-      VendedorId: id,
+      userId: id,
+      VendedorId: idSeller[0].id_vendedor,
     });
   } catch (error) {
     return res.status(500).json({ message: "Error en la petición" });
@@ -47,16 +59,22 @@ const deleteSellerByIdHandler = async (req, res) => {
 };
 
 const modifySellerByIdHandler = async (req, res) => {
-  const { id } = req.params;
+  const  id  = req.user;
   const newSeller = req.body;
   try {
-    const results = await searchSellerById(id);
+    const idSeller=await idSellerByUserId(id);
+    
+    if (!idSeller||idSeller.error||idSeller.length==0) {
+      return res.status(404).json({ message: "Vendedor no existe" });
+    }
 
+    const results = await searchSellerById(idSeller[0].id_vendedor);
+   
     if (!results || results.error || results.length == 0) {
       return res.status(404).json({ message: "Vendedor no encontrado" });
     }
     const seller = results[0];
-    const idUser = seller.usuario_id_usuario;
+   
     
     if (typeof newSeller.name !== "undefined") {
       seller.name = newSeller.name;
@@ -83,7 +101,7 @@ const modifySellerByIdHandler = async (req, res) => {
       seller.email = newSeller.email;
     }
 
-    const resultModify = await modifyUserById(idUser, seller);
+    const resultModify = await modifyUserById(id, seller);
 
     if (!resultModify || resultModify.error || resultModify.length == 0) {
       return res
@@ -99,8 +117,9 @@ const modifySellerByIdHandler = async (req, res) => {
       seller.salary = newSeller.salary;
     }
 
-    const resultModifySeller = await modifySellerById(id, seller);
-
+    const resultModifySeller = await modifySellerById(seller.id_vendedor, seller);
+   ////
+    console.log(resultModifySeller)
     if (
       !resultModifySeller ||
       resultModifySeller.error ||
@@ -108,10 +127,10 @@ const modifySellerByIdHandler = async (req, res) => {
     ) {
       return res.status(404).json({ message: "Vendedor no encontrado" });
     }
-    return res.json({ message: "Vendedor modificado con éxito" ,idSeller:id,idUser:idUser});
+    return res.json({ message: "Vendedor modificado con éxito" ,idSeller:seller.id_vendedor,idUser:id});
 
   } catch (error) {
-    return res.status(500).json({ message: "Error en la petición",error:error });
+    return res.status(500).json({ message: "Error en la petición",error:error.message });
   }
 };
 

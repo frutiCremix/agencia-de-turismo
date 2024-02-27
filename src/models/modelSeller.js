@@ -86,6 +86,7 @@ const modifySellerById = async (id, { job, salary }) => {
     if (error) {
       throw error;
     }
+    console.log("modelo seller",data)
     return data;
   } catch (error) {
     throw error;

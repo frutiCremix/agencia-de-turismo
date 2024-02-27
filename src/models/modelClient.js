@@ -16,7 +16,7 @@ const clientCreate = async (id) => {
     throw error;
   }
 };
-
+//datos del usuario de la tabla cliente
 const searchClientById = async (id) => {
   try {
     const { data, error } = await supabase
@@ -39,7 +39,7 @@ const searchClientById = async (id) => {
     throw error;
   }
 };
-
+//respuesta id del cliente
 const searchClientByUserId = async (id) => {
   try {
       // Realizar la consulta para obtener el ID del cliente
@@ -59,6 +59,7 @@ const searchClientByUserId = async (id) => {
   }
 };
 //necesito el id del user antes de eliminar el cliente y luego eliminar al usuario
+//esta solo devuelve el id del usuario similar a searchClientById
 const idUserByClientId = async (id) => {
   try {
     const { data, error } = await supabase
@@ -74,7 +75,7 @@ const idUserByClientId = async (id) => {
     throw error;
   }
 };
-
+//solo para desarrollo
 const deleteClientById = (id, callback) => {
   connection.query("DELETE FROM cliente WHERE id_cliente = ?", [id], callback);
 };

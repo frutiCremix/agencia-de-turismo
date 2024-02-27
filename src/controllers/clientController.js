@@ -1,23 +1,35 @@
-import { searchClientById, idUserByClientId } from "../models/modelClient.js";
+import { searchClientById, idUserByClientId,searchClientByUserId } from "../models/modelClient.js";
 import { setUserAsInactiveById, modifyUserById } from "../models/modelUser.js";
 
 const searchClientByIdHandler = async (req, res) => {
-  const { id } = req.params;
+  const  id  = req.user;
+  console.log(id)
   try {
-    const results = await searchClientById(id);
-    if (!results) {
+    const idClient=await searchClientByUserId(id);
+    if (!idClient||idClient.error|| idClient.length==0) {
+      return res.status(404).json({ message: "Usuario no existe" });
+    }
+    const results = await searchClientById(idClient[0].id_cliente);
+    console.log(results)
+    if (!results||results.error|| results.length==0) {
       return res.status(404).json({ message: "Cliente no encontrado" });
     }
-    res.json({ message: "Cliente encontrado con exito", results });
+    res.json({ message: "Cliente encontrado con exito", results:results });
   } catch (error) {
     res.status(500).json({ message: "Error en la consulta", error });
   }
 };
 
 const deleteClientByIdHandler = async (req, res) => {
-  const { id } = req.params;
+  const id = req.user;
   try {
-    const results = await idUserByClientId(id);
+    const idClient=await searchClientByUserId(id);
+   
+    if (!idClient||idClient.error|| idClient.length==0) {
+      return res.status(404).json({ message: "cliente no existe" });
+    }
+
+    const results = await idUserByClientId(idClient[0].id_cliente);
 
     if (!results || results.error || results.length==0) {
       return res.status(404).json({ message: "Cliente no encontrado" });
@@ -32,8 +44,8 @@ const deleteClientByIdHandler = async (req, res) => {
     }
     return res.json({
       message:"Cliente dado de baja con exito",
-      userId:userId,
-      clienteId:id,
+      userId:id,
+      clienteId:idClient[0].id_cliente,
     });
   } catch (error) {
     return res.status(500).json({ message: "Error en la petición" });
@@ -41,10 +53,16 @@ const deleteClientByIdHandler = async (req, res) => {
 };
 
 const modifyClientByIdHandler = async (req, res) => {
-  const { id } = req.params;
+  const  id = req.user;
   const nuevoCliente = req.body;
 try{
-  const results=await searchClientById(id);
+  const idClient=await searchClientByUserId(id);
+ 
+    if (!idClient||idClient.error|| idClient.length==0) {
+      return res.status(404).json({ message: "Usuario no existe" });
+    }
+
+  const results=await searchClientById(idClient[0].id_cliente);
 
 
   if (!results || results.error || results.length==0) {
@@ -86,9 +104,9 @@ try{
       return res.status(404).json({ message: "Cliente no encontrado" });
     }
     
-    res.json({message:"Cliente modificado con exito",idCliente:id,idUser:idUser});
+    res.json({message:"Cliente modificado con exito",idCliente:idClient[0].id_cliente,idUser:idUser});
   }catch(error){
-    return res.status(500).json({ message: "Error en la consulta de modificacion",error:error });
+    return res.status(500).json({ message: "Error en la consulta de modificacion",error:error.message });
   }
 };
 

@@ -2,11 +2,12 @@
 ###GET
 //usuarios insertar id
 GET {{devUrl}}/user/47
-###clientes insertar id
-GET {{devUrl}}/client/1
-
-###vendedor 
-GET {{devUrl}}/seller/1
+###clientes logueados
+GET {{devUrl}}/client
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA5MDQzMTYwLCJleHAiOjE3MDkwNDY3NjB9.VEqXyNFMBGrwr1PVBvdXYvSx7vVlP34G76PPXAUOgB8
+###vendedor logueado
+GET {{devUrl}}/seller
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5MDQ2ODYwLCJleHAiOjE3MDkwNTA0NjB9.8czfVbHei_-rF1WJJNk8Y6NtrjBq_YJq7cy8GcpMTYc
 
 ###ruta privada de prueba para el login
 GET {{devUrl}}/private
@@ -102,32 +103,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0I
 
 ### rutas PATCH
 //modificamos cliente se puede enviar menos datos
-PATCH {{devUrl}}/client/4
+PATCH {{devUrl}}/client
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA5MDQ3NDc3LCJleHAiOjE3MDkwNTEwNzd9.9mcrxvRk8HnynbW_8jyZzPntxMwcxRn6epOfvoKQkEM
 
 {  
       "name": "sebastian",
-      "email": "sebas@hotmail.com",        
+      "email": "modificado@hotmail.com",        
       "phone": "1122334455",
       "address": "ezeiza",  
       "country": "argentina",
       "lastname": "oliveto"       
 }
 ### modificamos empleado se puede enviar menos datos
-PATCH  {{devUrl}}/seller/2
+PATCH  {{devUrl}}/seller
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5MDQ3OTM3LCJleHAiOjE3MDkwNTE1Mzd9.UThUf1hKPGobx1exgjCEknqhlucMDbR2eOb0SweLGyw
 
 {   
-    "name":"sebas",
-    "lastname":"oliveto",
-    "address":"ezeiza",
-    "dni":"183456",
-    "birthdate":"1993-08-07",
-    "country":"argentina",
-    "phone":"12345678",
-    "email":"nuevo@hotmail.com",
-    "job":"gerente",
-    "salary":"15000"
+    "country":"argentina"
 }
 
 ### rutas delete se elimina por id cliente/empleado y automaticamente se elimina el usuario asociado
@@ -136,8 +130,10 @@ Content-Type: application/json
 //user
 DELETE {{devUrl}}/user/42
 ### 
-DELETE {{devUrl}}/client/1
+DELETE {{devUrl}}/client
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA5MDQ3NDc3LCJleHAiOjE3MDkwNTEwNzd9.9mcrxvRk8HnynbW_8jyZzPntxMwcxRn6epOfvoKQkEM
 
 ###
 //vendedor
-DELETE {{devUrl}}/seller/1
+DELETE {{devUrl}}/seller
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5MDQ3OTM3LCJleHAiOjE3MDkwNTE1Mzd9.UThUf1hKPGobx1exgjCEknqhlucMDbR2eOb0SweLGyw
