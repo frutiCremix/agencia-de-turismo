@@ -114,8 +114,7 @@ PATCH  /seller
 - actualizacion se cambio por baja logica el usuario se agrego user_state=false/true 
 - ya no se utiliza la baja fisica en la bd.Se conservan los datos
 
-user
-#### DELETE http://localhost:{puerto}/user/id
+
 cliente 
 #### DELETE /client
 Authorization: Bearer token
