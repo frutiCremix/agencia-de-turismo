@@ -99,7 +99,6 @@ const searchUserById = async (id) => {
     if (error) {
       throw error;
     }
-
     return data ? data[0] : null; 
   } catch (error) {
     throw error;

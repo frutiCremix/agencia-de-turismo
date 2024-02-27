@@ -8,6 +8,7 @@ import { setUserAsInactiveById, modifyUserById } from "../models/modelUser.js";
 
 const searchSellerByIdHandler = async (req, res) => {
   const { id } = req.params;
+ 
   try {
     const results = await searchSellerById(id);
     if (!results) {

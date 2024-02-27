@@ -81,7 +81,7 @@ try{
 
     //enviar cliente al modelo del usuario
     const resultModify=await modifyUserById(idUser, cliente); 
-
+//si me pasa la clave y no la manejo dispara este error.. ARREGLAR
     if(!resultModify||resultModify.error||resultModify.length==0){
       return res.status(404).json({ message: "Cliente no encontrado" });
     }

@@ -65,7 +65,7 @@ const getPricePackage = async (req, res, next) => {
       
       next();
   } catch (error) {
-      res.status(500).json({ message: "Error interno del servidor",error:error });
+      res.status(500).json({ message: "Error interno del servidor",error:error.message });
   }
   
 };

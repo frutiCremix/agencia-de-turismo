@@ -12,7 +12,9 @@ GET {{devUrl}}/seller/1
 GET {{devUrl}}/private
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA4NzYyMjc5LCJleHAiOjE3MDg3NjU4Nzl9.IOfAXYQ7Qg5m95BiUcVJw9lU6jDXr_AJwTMGdoXFAOs
 
-
+###
+GET {{devUrl}}/sales
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA4OTk5ODQ2LCJleHAiOjE3MDkwMDM0NDZ9.HdoS5MMfKjrnFwkzduPly8X_sr37lTeZ-pANn1lnDuA
 //rutas post
 //usernames unicos no permite duplicados
 ###crear usuario con rol cliente
@@ -55,18 +57,18 @@ Content-Type: application/json
 }
 
 ### creacion de servicio por parte de empleado
-//el sistema verifica rol del usuario si es empleado
+//el sistema verifica rol del usuario si es vendedor
 POST {{devUrl}}/service
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA4NzYyNzA2LCJleHAiOjE3MDg3NjYzMDZ9.1kCocFk997pgbztXpG2SQrrHuftrZeImoIhA-_tvA1M
 
 {
-    "name":"entrada a eventos",
-    "description":"cosquin rock",
-    "service_destination":"cordoba",
-    "service_date":"2024-2-15",
-    "cost":"30000",
-    "service_code":7
+    "name":"hotel por noche",
+    "description":"hotel con vista al mar 5 estrellas",
+    "service_destination":"bolivia",
+    "service_date":"2024-3-15",
+    "cost":"470000",
+    "service_code":1
 }
 //contraseña encriptada en ambos casos, acordarsela XD
 ### login cliente
@@ -91,7 +93,7 @@ Content-Type: application/json
 //los servicios son los id identificadores de la tabla servicio
 POST {{devUrl}}/sales
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA4NzY0MTMyLCJleHAiOjE3MDg3Njc3MzJ9.TZtT9Hg69rn8kktIwV8yAZ_tCuMcX3-OM8xQg534VV0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA4OTkyNDkyLCJleHAiOjE3MDg5OTYwOTJ9.GGCCeDN50zpeW02T-OP7HtKtRhr9gmjL1hoj9WKuY44
 
 {
     "id_servicios":[4],

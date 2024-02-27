@@ -19,7 +19,7 @@ import {
   getPricePackage,
   getAllServiceHandler
 } from "../controllers/serviceController.js";
-import { createSaleHandler } from "../controllers/saleController.js";
+import { createSaleHandler,getAllSalesforUserHandler } from "../controllers/saleController.js";
 
 import { sign, verify } from "../utils/jwt.js";
 import { authenticate, isSeller } from "../utils/auth.js";
@@ -41,6 +41,7 @@ router.patch("/seller/:id", modifySellerByIdHandler);
 
 router.post("/service", verify, isSeller, createServiceHandler);
 
+router.get('/sales',verify,getAllSalesforUserHandler)
 router.post("/sales", verify, getPricePackage, createSaleHandler);
 
 router.post("/login", authenticate, (req, res) => {

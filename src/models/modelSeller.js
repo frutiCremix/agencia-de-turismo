@@ -40,7 +40,23 @@ const searchSellerById=async (id)=>{
    
   
 };
+const idSellerByUserId=async(id)=>{
+  try {
+    const { data, error } = await supabase
+      .from('vendedor')
+      .select(`*`)
+      .eq('usuario_id_usuario', id);
+      
 
+    if (error) {
+      throw new Error(`Error al buscar el vendedor con ID ${id}: ${error.message}`);
+    }
+    
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
 const idUserBySellerId = async (id) => {
   try {
     const { data, error } = await supabase
@@ -77,4 +93,4 @@ const modifySellerById = async (id, { job, salary }) => {
 };
 
 
-  export {sellerCreate,searchSellerById,idUserBySellerId,deleteSellerById,modifySellerById};
+  export {sellerCreate,searchSellerById,idUserBySellerId,deleteSellerById,modifySellerById,idSellerByUserId};

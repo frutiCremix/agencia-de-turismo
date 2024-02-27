@@ -58,4 +58,37 @@ const getAllService = async()=>{
     
     return data;
 }
-export {createService,searchSellerByUserId,getPriceService,getAllService}
+const getAllServiceById=async(id_vendedor)=>{
+    const { data, error } = await supabase
+    .from('servicio')
+    .select('*')
+    .eq('vendedor_id_vendedor',id_vendedor);
+    if (error) {
+        throw new Error('Error al obtener los servicios desde Supabase');
+    }
+    
+    return data;
+}
+
+const serviceSoldForUser = async (id_servicio) => {
+    
+    try {
+        const { data, error } = await supabase
+        .from("paquete")
+  .select(`
+    *,
+    servicio:servicio_id_servicio ( * ) as servicio_name,`)
+  .eq("servicio_id_servicio", id_servicio);
+        
+        if (error) {
+            throw new Error('Error en la consulta join de paquete y servicio');
+        }
+        
+        console.log(data);
+        return data;
+    } catch (error) {
+        throw new Error('Error interno del servidor al hacer la consulta: ' + error.message);
+    }
+}
+
+export {createService,searchSellerByUserId,getPriceService,getAllService,getAllServiceById,serviceSoldForUser}

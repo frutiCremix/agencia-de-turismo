@@ -22,4 +22,6 @@ export const createSale = async (payment_method, idClient, subtotal, strSellers)
     } catch (error) {
         throw error;
     }
+
 };
+
