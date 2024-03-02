@@ -32,6 +32,13 @@ const userCreate = async (
   if (!dateRegex.test(birthdate)) {
     throw new Error("La fecha debe tener el formato yyyy-mm-dd.");
   }
+  if (role !== "cliente" && role !== "vendedor") {
+    throw new Error("El rol debe ser 'cliente' o 'vendedor'.");
+  }
+  const phoneRegex = /^\d{8,}$/;
+  if (!phoneRegex.test(phone)) {
+    throw new Error("El número de teléfono debe contener solo números.");
+  }
 
   try {
     const { data, error } = await supabase
@@ -82,12 +89,6 @@ const searchUserByUserName = async (username) => {
     throw error;
   }
   
-  
-  /*connection.query(
-    "SELECT * FROM usuario WHERE username = ?",
-    [username],
-    callback
-  );*/
 };
 const searchUserById = async (id) => {
   try {
@@ -104,7 +105,7 @@ const searchUserById = async (id) => {
     throw error;
   }
 };
-//damos la baja logica
+
 const setUserAsInactiveById = async (id) => {
   try {
      const { data, error } = await supabase

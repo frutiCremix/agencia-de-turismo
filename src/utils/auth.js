@@ -3,6 +3,7 @@ import { compare } from "./handleCrypt.js";
 import { searchUserById } from "../models/modelUser.js";
 export async function authenticate(req, res, next) {
   const { username, password } = req.body;
+  
   if (!username || !password) {
     return res.status(401).json({
       message: "credenciales no otorgadas",

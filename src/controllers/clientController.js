@@ -3,7 +3,7 @@ import { setUserAsInactiveById, modifyUserById } from "../models/modelUser.js";
 
 const searchClientByIdHandler = async (req, res) => {
   const  id  = req.user;
-  console.log(id)
+  
   try {
     const idClient=await searchClientByUserId(id);
     if (!idClient||idClient.error|| idClient.length==0) {

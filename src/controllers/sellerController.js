@@ -12,7 +12,7 @@ const searchSellerByIdHandler = async (req, res) => {
  
   try {
     const idSeller=await idSellerByUserId(id);
-    console.log(idSeller)
+    
     if (!idSeller||idSeller.error||idSeller.length==0) {
       return res.status(404).json({ message: "Vendedor no existe" });
     }

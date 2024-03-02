@@ -12,7 +12,14 @@ export const createUser = async (req, res) => {
   const body = req.body;
   const hash = encrypt(body.password);
 
+//validaciones
   try {
+
+    const existingUser = await searchUserByUserName(body.username);
+    if (existingUser) {
+      return res.status(400).json({ message: "El nombre de usuario ya está en uso" });
+    }
+
     const insertedUser = await userCreate(body, hash);
     if (body.role === "cliente") {
       await clientCreate(insertedUser[0].id_usuario);

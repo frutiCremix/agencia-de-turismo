@@ -16,14 +16,14 @@ const createServiceHandler = async (req, res) => {
       return res.status(404).json({ message: "Vendedor no encontrado" });
     }
 
-    // Crear el servicio utilizando los datos recibidos en el cuerpo de la solicitud (req.body)
+    
     const serviceData = req.body;
     const resultsCreate = await createService(sellerId[0].id_vendedor, serviceData);
 
     if (!resultsCreate || resultsCreate.error || resultsCreate.length==0) {
       return res.status(500).json({ message: "Error al crear el servicio" });
     }
-    // Si se crea el servicio correctamente, enviar una respuesta de éxito
+    
     res.status(201).json({ message: "Servicio creado correctamente",service:resultsCreate[0]});
   } catch (error) {
     res.status(500).json({ message: "Error interno del servidor",error:error });
@@ -37,7 +37,7 @@ const getPricePackage = async (req, res, next) => {
   const sellers = [];
   const promises = [];
 //Creamos el array de promesas
-//las resolvemos todas juntas para devolver una sola respuesta
+//las resolvemos todas juntas 
   servicios.forEach((idService) => {
     
       const promise = new Promise(async (resolve, reject) => {
