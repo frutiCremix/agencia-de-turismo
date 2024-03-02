@@ -37,7 +37,7 @@ const userCreate = async (
   }
   const phoneRegex = /^\d{8,}$/;
   if (!phoneRegex.test(phone)) {
-    throw new Error("El número de teléfono debe contener solo números.");
+    throw new Error("El número de teléfono debe contener solo números minimo 8.");
   }
 
   try {
@@ -83,7 +83,7 @@ const searchUserByUserName = async (username) => {
     return data[0];
 
   } else {
-    throw new Error("No se pudo obtener el ID del usuario insertado.");
+    return null;
   } 
   }catch(error){
     throw error;

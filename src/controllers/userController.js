@@ -23,11 +23,11 @@ export const createUser = async (req, res) => {
     const insertedUser = await userCreate(body, hash);
     if (body.role === "cliente") {
       await clientCreate(insertedUser[0].id_usuario);
-      res.send("Cliente creado con éxito");
+      res.json({message:"Cliente creado con éxito"});
     } else if (body.role === "vendedor") {
       await sellerCreate(body.job, body.salary, insertedUser[0].id_usuario);
 
-      res.send("Empleado creado con éxito");
+      res.json({message:"Empleado creado con éxito"});
     } else {
       res.json({ message: "Usuario creado con éxito" });
     }
@@ -39,8 +39,8 @@ export const createUser = async (req, res) => {
         .status(500)
         .json({ message: "El nombre de usuario ya está en uso" });
     }
-    console.error("Error al crear el usuario:", error);
-    res.status(500).json({ message: "Error al crear el usuario" });
+    
+    res.status(500).json({ message: "Error al crear el usuario",error:error.message });
   }
 };
 export const searchUserHandler = async (username) => {
