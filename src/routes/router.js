@@ -27,7 +27,7 @@ const router = Router();
 
 router.get("/", getAllServiceHandler);
 
-router.get("/user/:id", searchUserByIdHandler);
+router.get("/user",verify, searchUserByIdHandler);
 router.post("/user", createUser);
 router.delete("/user/:id", deleteUserByIdHandler);
 

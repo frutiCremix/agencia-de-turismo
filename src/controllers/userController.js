@@ -60,18 +60,17 @@ export const searchUserHandler = async (username) => {
   }
 };
 export const searchUserByIdHandler = async (req, res) => {
-  const { id } = req.params;
-
+  const  id  = req.user;
   try {
     const results = await searchUserById(id); // Cambia results a user
 
-    if (!results) {
+    if (!results || results.length==0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
-
-    res.json({ message: "Usuario encontrado con éxito", results });
+    
+    return res.json({ message: "Usuario encontrado con éxito", results });
   } catch (error) {
-    res.status(500).json({ message: "Error en la consulta", error });
+    return res.status(500).json({ message: "Error en la consulta", error });
   }
 };
 export const deleteUserByIdHandler = async(req, res) => {
