@@ -17,7 +17,8 @@ import {
 import {
   createServiceHandler,
   getPricePackage,
-  getAllServiceHandler
+  getAllServiceHandler,
+  getServiceHandler
 } from "../controllers/serviceController.js";
 import { createSaleHandler,getAllSalesforUserHandler } from "../controllers/saleController.js";
 
@@ -39,6 +40,7 @@ router.get("/seller",verify, searchSellerByIdHandler);
 router.delete("/seller",verify, deleteSellerByIdHandler);
 router.patch("/seller",verify, modifySellerByIdHandler);
 
+router.get("/service",verify,isSeller,getServiceHandler);
 router.post("/service", verify, isSeller, createServiceHandler);
 
 router.get('/sales',verify,getAllSalesforUserHandler)

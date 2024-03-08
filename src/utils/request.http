@@ -7,7 +7,12 @@ GET {{devUrl}}/client
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0IjoxNzA5MDQzMTYwLCJleHAiOjE3MDkwNDY3NjB9.VEqXyNFMBGrwr1PVBvdXYvSx7vVlP34G76PPXAUOgB8
 ###vendedor logueado
 GET {{devUrl}}/seller
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5MDQ2ODYwLCJleHAiOjE3MDkwNTA0NjB9.8czfVbHei_-rF1WJJNk8Y6NtrjBq_YJq7cy8GcpMTYc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5ODYwODg5LCJleHAiOjE3MDk4NjQ0ODl9.0CeztRWrSTqd7He8eQgV4wRbllb8EDx7ocl031nGpjQ
+
+###servicios del vendedor
+GET {{devUrl}}/service
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5ODYwODg5LCJleHAiOjE3MDk4NjQ0ODl9.0CeztRWrSTqd7He8eQgV4wRbllb8EDx7ocl031nGpjQ
+
 
 ###ruta privada de prueba para el login
 GET {{devUrl}}/private

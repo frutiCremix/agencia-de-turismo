@@ -2,8 +2,10 @@ import {
   createService,
   searchSellerByUserId,
   getPriceService,
-  getAllService
+  getAllService,
+  getAllServiceById
 } from "../models/modelService.js";
+import {idSellerByUserId} from '../models/modelSeller.js';
 //necesitamos saber los servicios que pertenecen al empleado
 
 const createServiceHandler = async (req, res) => {
@@ -80,4 +82,24 @@ const getAllServiceHandler=async (req,res)=>{
     res.status(500).json({message:'error en la solicitud getAllService',error:error});
   }
 }
-export { createServiceHandler, getPricePackage,getAllServiceHandler };
+const getServiceHandler= async (req,res)=>{
+  const id=req.user;
+
+  try{
+    const seller=await idSellerByUserId(id);
+    
+    if (!seller||seller.error||seller.length==0) {
+      return res.status(404).json({ message: "Vendedor no existe" });
+    }
+    const results=await getAllServiceById(seller[0].id_vendedor);
+
+    if(!results || results.error || results.length==0){
+      res.status(404).json({message:"vendedor no posee servicios cargados",idSeller:idSeller,idUser:id});
+    }
+    res.json({message:"servicios encontrados con exito",results:results})
+  }catch(error){
+    res.status(500).json({message:"error en la peticion de obetner servicios por id_vendedor",error:error.message});
+  }
+  
+}
+export { createServiceHandler, getPricePackage,getAllServiceHandler,getServiceHandler };
