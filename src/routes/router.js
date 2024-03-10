@@ -18,7 +18,9 @@ import {
   createServiceHandler,
   getPricePackage,
   getAllServiceHandler,
-  getServiceHandler
+  getServiceHandler,
+  deleteServiceHandler,
+  modifyServiceByIdHandler
 } from "../controllers/serviceController.js";
 import { createSaleHandler,getAllSalesforUserHandler } from "../controllers/saleController.js";
 
@@ -42,6 +44,10 @@ router.patch("/seller",verify, modifySellerByIdHandler);
 
 router.get("/service",verify,isSeller,getServiceHandler);
 router.post("/service", verify, isSeller, createServiceHandler);
+//crear ruta patch para serivce
+router.patch("/service",verify,isSeller,modifyServiceByIdHandler);
+//ruta delete service logica agregamos una columna de alta/baja
+router.delete("/service/:id",verify,isSeller,deleteServiceHandler);
 
 router.get('/sales',verify,getAllSalesforUserHandler)
 router.post("/sales", verify, getPricePackage, createSaleHandler);

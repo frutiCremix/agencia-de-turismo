@@ -11,8 +11,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0I
 
 ###servicios del vendedor
 GET {{devUrl}}/service
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5ODYwODg5LCJleHAiOjE3MDk4NjQ0ODl9.0CeztRWrSTqd7He8eQgV4wRbllb8EDx7ocl031nGpjQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5OTAwOTQwLCJleHAiOjE3MDk5MDQ1NDB9.GxOnIZDYPhpLHPjczHfq_dUarTZ9ac3otj_ahXMvPgA
 
+### get all services
+GET {{devUrl}}/
 
 ###ruta privada de prueba para el login
 GET {{devUrl}}/private
@@ -128,6 +130,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0I
 {   
     "country":"argentina"
 }
+### modificamos un servicio
+
+PATCH  {{devUrl}}/service
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzEwMDk0MzI1LCJleHAiOjE3MTAwOTc5MjV9.ETym-b7fTTmKuX07s-C-G4O8wgE2nYFY5yqSinoNoLc
+
+{   
+    "id_service":5,
+    "name":"hotel por la noche",
+    "description":"hotel con vista al mar 5 estrellas",
+    "service_destination":"bolivia",
+    "service_date":"2024-3-15",
+    "cost":470000,
+    "service_code":1
+}
+
 
 ### rutas delete se elimina por id cliente/empleado y automaticamente se elimina el usuario asociado
 //actualizacion se cambio por baja logica el usuario se agrego baja=false/true
@@ -142,3 +160,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0NywiaWF0I
 //vendedor
 DELETE {{devUrl}}/seller
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzA5MDQ3OTM3LCJleHAiOjE3MDkwNTE1Mzd9.UThUf1hKPGobx1exgjCEknqhlucMDbR2eOb0SweLGyw
+
+###delete service
+DELETE {{devUrl}}/service/23
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzEwMDkxNDUyLCJleHAiOjE3MTAwOTUwNTJ9.iRIW379xMItPBF6uw3xvZnZCQ_XHhEMKmVtk3y_ctHY
