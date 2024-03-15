@@ -134,16 +134,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0I
 
 PATCH  {{devUrl}}/service
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzEwMDk0MzI1LCJleHAiOjE3MTAwOTc5MjV9.ETym-b7fTTmKuX07s-C-G4O8wgE2nYFY5yqSinoNoLc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0OCwiaWF0IjoxNzEwMTg3ODkyLCJleHAiOjE3MTAxOTE0OTJ9.y2Q_h0L9kLhRKgsVsx6Zlwj6-5QH90APVk0-T7rFvJ0
 
 {   
-    "id_service":5,
+    "id_service":23,
     "name":"hotel por la noche",
-    "description":"hotel con vista al mar 5 estrellas",
-    "service_destination":"bolivia",
-    "service_date":"2024-3-15",
-    "cost":470000,
-    "service_code":1
+    "description":"viaja y disfruta de la comodidad de airline libertador",
+    "service_destination":"bogota",
+    "service_date":"2024-08-14",
+    "cost":175,
+    "service_code":4
 }
 
 

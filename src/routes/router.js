@@ -44,9 +44,11 @@ router.patch("/seller",verify, modifySellerByIdHandler);
 
 router.get("/service",verify,isSeller,getServiceHandler);
 router.post("/service", verify, isSeller, createServiceHandler);
-//crear ruta patch para serivce
+//crear ruta patch para service
+//falta verificar que sea el usuario creador
 router.patch("/service",verify,isSeller,modifyServiceByIdHandler);
 //ruta delete service logica agregamos una columna de alta/baja
+//falta verificar que sea el usuario creador
 router.delete("/service/:id",verify,isSeller,deleteServiceHandler);
 
 router.get('/sales',verify,getAllSalesforUserHandler)
